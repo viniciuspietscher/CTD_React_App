@@ -1,16 +1,11 @@
 import { createUseStyles } from 'react-jss';
-import { borderColor, boxShadow } from '../styles';
+import { useState } from 'react';
+import Card from '../layout/Card';
+import ListItem from './ListItem';
+import CompletionBar from './CompletionBar';
+import { ROUNDED, TRANSPARENT } from '../styles';
 
 const useStyles = createUseStyles({
-  root: {
-    border: `1px solid ${borderColor}`,
-    borderRadius: 5,
-    padding: 20,
-    boxShadow: boxShadow,
-    '&:not(:last-child)': {
-      marginBottom: 20,
-    },
-  },
   title: {
     margin: 0,
     marginBottom: 10,
@@ -24,28 +19,76 @@ const useStyles = createUseStyles({
   checkbox: {
     marginRight: 10,
   },
+  newItem: {
+    border: 'none',
+    backgroundColor: TRANSPARENT[50],
+    borderRadius: ROUNDED,
+    fontSize: 16,
+    marginLeft: 25,
+    marginTop: 15,
+    padding: 5,
+  },
 });
 
-export default function List({ title, items }) {
+export function List({ title, items: initialItems }) {
   const classes = useStyles();
+  const [items, setItems] = useState(initialItems);
+  const [newItem, setNewItem] = useState('');
+
+  const completed = items.reduce((counter, item) => {
+    if (item.checked) counter += 1;
+    return counter;
+  }, 0);
+
+  const handleCheckClick = (clickedIndex) => {
+    setItems(
+      items.map((item, index) => {
+        if (index !== clickedIndex) return item;
+        return { ...item, checked: !item.checked };
+      })
+    );
+  };
+
+  const handleAddNewItem = (event) => {
+    event.preventDefault();
+    if (newItem.trim()) {
+      setItems([...items, { text: newItem.trim(), checked: false }]);
+      setNewItem('');
+    }
+  };
+
+  const handleNewItemChange = (event) => {
+    event.preventDefault();
+    setNewItem(event.target.value);
+  };
 
   const listItems = items.map((item, index) => (
-    <span className={classes.item}>
-      <input
-        className={classes.checkbox}
-        type="checkbox"
-        id={index}
-        name={item}
-        value={index}
-      />
-      <label for={index}>{item}</label>
-    </span>
+    <ListItem
+      key={index}
+      text={item.text}
+      checked={item.checked}
+      index={index}
+      onChange={handleCheckClick}
+    />
   ));
 
   return (
-    <div className={classes.root}>
+    <Card>
       <h2 className={classes.title}>{title}</h2>
       <form>{listItems}</form>
-    </div>
+      <form onSubmit={handleAddNewItem}>
+        <input
+          type="text"
+          className={classes.newItem}
+          value={newItem}
+          onChange={handleNewItemChange}
+          placeholder="new item"
+        ></input>
+        <input type="submit" />
+      </form>
+      <CompletionBar completed={completed} total={items.length} />
+    </Card>
   );
 }
+
+export default List;

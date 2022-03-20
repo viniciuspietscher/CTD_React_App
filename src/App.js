@@ -1,12 +1,17 @@
 import Lists from './components/Lists';
-import data from './constants/data';
+import Footer from './components/Footer';
+import lists from './constants/data';
 import { createUseStyles } from 'react-jss';
-import { fontColor } from './styles';
+import { BACKGROUND_COLOR, DARK_ON_LIGHT_TEXT_COLOR } from './styles';
 
 const useStyles = createUseStyles({
   root: {
     fontFamily: 'Helvetica',
-    color: fontColor,
+    color: DARK_ON_LIGHT_TEXT_COLOR,
+    backgroundColor: BACKGROUND_COLOR,
+    boxSizing: 'border-box',
+    minHeight: `100vh`,
+    padding: 30,
   },
 });
 
@@ -16,8 +21,8 @@ function App() {
   return (
     <div className={classes.root}>
       <h1>List App</h1>
-      <Lists data={data} />
-      <footer>Information that will go on the bottom of the page</footer>
+      <Lists data={lists} />
+      <Footer />
     </div>
   );
 }
