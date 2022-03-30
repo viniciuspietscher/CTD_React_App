@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import Card from '../layout/Card';
+import { Card, CardContent } from '@mui/material';
 
 const useStyles = createUseStyles({
   title: {
@@ -11,9 +11,11 @@ const useStyles = createUseStyles({
 export function CreateNewList() {
   return (
     <Card>
-      <form>
-        List Name: <input type="text"></input>
-      </form>
+      <CardContent>
+        <form>
+          List Name: <input type="text"></input>
+        </form>
+      </CardContent>
     </Card>
   );
 }

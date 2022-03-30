@@ -1,7 +1,18 @@
 import { createUseStyles } from 'react-jss';
 import { useState } from 'react';
-import Card from '../layout/Card';
-import ListItem from './ListItem';
+import {
+  Box,
+  IconButton,
+  Card,
+  CardContent,
+  FormGroup,
+  Checkbox,
+  FormControlLabel,
+  TextField,
+  Typography,
+  InputAdornment,
+} from '@mui/material';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CompletionBar from './CompletionBar';
 import { ROUNDED, TRANSPARENT } from '../styles';
 
@@ -62,31 +73,38 @@ export function List({ title, items: initialItems }) {
     setNewItem(event.target.value);
   };
 
-  const listItems = items.map((item, index) => (
-    <ListItem
-      key={index}
-      text={item.text}
-      checked={item.checked}
-      index={index}
-      onChange={handleCheckClick}
-    />
-  ));
-
   return (
     <Card>
-      <h2 className={classes.title}>{title}</h2>
-      <form>{listItems}</form>
-      <form onSubmit={handleAddNewItem}>
-        <input
-          type="text"
-          className={classes.newItem}
-          value={newItem}
-          onChange={handleNewItemChange}
-          placeholder="new item"
-        ></input>
-        <input type="submit" />
-      </form>
-      <CompletionBar completed={completed} total={items.length} />
+      <CardContent>
+        <Typography variant="h4">{title}</Typography>
+        <form>
+          {items.map((item, index) => (
+            <FormGroup>
+              <FormControlLabel
+                control={<Checkbox checked={item.checked} />}
+                onChange={() => handleCheckClick(index)}
+                label={item.text}
+              />
+            </FormGroup>
+          ))}
+        </form>
+        <form onSubmit={handleAddNewItem}>
+          <TextField
+            value={newItem}
+            onChange={handleNewItemChange}
+            label="New item"
+            variant="standard"
+            InputProps={{
+              endAdornment: (
+                <IconButton color="primary" aria-label="add" component="span">
+                  <AddCircleOutlineIcon />
+                </IconButton>
+              ),
+            }}
+          />
+        </form>
+        <CompletionBar completed={completed} total={items.length} />
+      </CardContent>
     </Card>
   );
 }
