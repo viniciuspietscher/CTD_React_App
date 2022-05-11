@@ -1,21 +1,26 @@
-export const lists = [
+const response = [
   {
-    title: 'Shopping List',
-    items: [
-      { text: 'apples', checked: true },
-      { text: 'bananas', checked: false },
-      { text: 'oranges', checked: true },
-    ],
+    displayName: 'Oprah Winfrey',
+    content:
+      'HI TWITTERS . THANK YOU FOR A WARM WELCOME. FEELING REALLY 21st CENTURY .',
   },
   {
-    title: 'Todos',
-    items: [
-      { text: 'go to the store', checked: true },
-      { text: 'do laundry', checked: false },
-      { text: 'water the plants', checked: false },
-      { text: 'go to the gym', checked: false },
-    ],
+    displayName: 'Jack Dorsey',
+    content: 'just setting up my twttr',
+  },
+  {
+    displayName: 'Cher',
+    content:
+      'I was looking at tweets & saw that i really hurt someones feelings ! Im sorry. It was light blue background with white egg shape . Bye',
+  },
+  {
+    displayName: 'Martha Stewart',
+    content: 'L',
   },
 ];
 
-export default lists;
+export const mockData = new Promise((resolve) => {
+  setTimeout(() => {
+    resolve(response);
+  }, 3000);
+});
