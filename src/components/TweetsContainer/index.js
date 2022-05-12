@@ -1,9 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
-import { mockData } from '../constants/data';
-import { Tweet } from './Tweet';
-
+import { mockData } from '../../constants/data';
+import { Tweet } from '../Tweet';
+import styles from './styles.module.css'
 
 export const TweetsContainer = (props) => {
+
+  console.log(styles)
+
   // State
   const [tweets, setTweets] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -38,7 +41,7 @@ export const TweetsContainer = (props) => {
   // If it is omitted, it runs every time the component re-renders
 
   return (
-    <div>
+    <div className={styles.tweetsContainer}>
       {!isNewTweetFormOpen && (
         <button className="newTweet" onClick={handleOpenTweetForm}>
           + New Tweet

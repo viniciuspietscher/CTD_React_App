@@ -1,0 +1,25 @@
+.tweet {
+    border: 1px solid rgb(197, 126, 54);
+    background-color: rgb(184, 199, 245);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 0 10px 10px 10px;
+    &:hover {
+        background-color: rgb(54, 197, 97);
+    }
+}
+
+.tweetPromoted {
+    border: 1px solid rgb(233, 155, 46);
+    background-color: rgb(245, 222, 184);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 0 10px 10px 10px
+}
+
+.tweetLikeButton {
+    background-color: rgb(36, 61, 130);
+    margin-left: 20px;
+    color:rgb(231, 231, 231);
+    border: none;
+}

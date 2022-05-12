@@ -1,4 +1,4 @@
-import {nextSteps} from '../constants/nextSteps'
+import {nextSteps} from '../../../constants/nextSteps'
 
 export const NextStepsPopover = (props) => {
     return (

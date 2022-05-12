@@ -1,29 +1,20 @@
 import { useState } from 'react';
-// import './index.css'
-// import styles from './index.module.css';
-// import styles from './index.module.scss';
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
   root: {
     padding: 20,
-    backgroundColor: (promoted) => promoted ? '#ffedcf' : '',
-    border: (promoted) => promoted ? '1px solid #ffb53b' : '1px solid #a3a3a3',
+    backgroundColor: (promoted) =>
+      promoted ? 'rgb(197, 126, 54)' : 'rgb(184, 199, 245)',
+    border: (promoted) =>
+      promoted ? 'rgb(233, 155, 46)' : '1px solid rgb(54, 92, 197)',
     borderRadius: 10,
-    marginBottom: 20,
-    marginLeft: 20,
-    marginRight: 20,
-    '&:first-child': {
-      marginTop: 20
-    }
+    margin: '0 10 10 10',
   },
   button: {
     padding: 10,
     marginLeft: 10,
-    '&:hover': {
-      backgroundColor: 'green'
-    }
-  }
+  },
 });
 
 export const Tweet = ({ username, content, promoted }) => {
@@ -35,7 +26,6 @@ export const Tweet = ({ username, content, promoted }) => {
 
   return (
     <div
-      //className="Tweet"
       className={styles.root}
     >
       <h3>{username}</h3>
