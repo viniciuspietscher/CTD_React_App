@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { mockData } from '../constants/data';
 import { Tweet } from './Tweet';
 
+
 export const TweetsContainer = (props) => {
   // State
   const [tweets, setTweets] = useState([]);
@@ -65,7 +66,7 @@ export const TweetsContainer = (props) => {
       {isLoading && 'loading'}
       {!isLoading &&
         filteredTweets.map((tweet) => (
-          <Tweet username={tweet.displayName} content={tweet.content}></Tweet>
+          <Tweet username={tweet.displayName} content={tweet.content} promoted={tweet.promoted}></Tweet>
         ))}
     </div>
   );
