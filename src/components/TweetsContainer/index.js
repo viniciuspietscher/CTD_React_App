@@ -1,7 +1,12 @@
+/*  COMPONENT NOTES 
+    - This component uses a CSS modules approach to styling
+    - Styles are imported as an object as the default export
+*/
+
 import { useState, useEffect, useRef } from 'react';
 import { mockData } from '../../constants/data';
 import { Tweet } from '../Tweet';
-import styles from './styles.module.css'
+import styles from './styles.module.css';
 
 export const TweetsContainer = (props) => {
   // State
@@ -33,9 +38,12 @@ export const TweetsContainer = (props) => {
     post.displayName.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  // When an item in the dependency array changes, then the anonymous function runs
-  // If the array is empty, it only runs when the component initially mounts
-  // If it is omitted, it runs every time the component re-renders
+  /* NOTES
+     - When an item in the dependency array changes, then the anonymous function
+       runs
+     - If the array is empty, it only runs when the component initially mounts
+     - If it is omitted, it runs every time the component re-renders
+  */
 
   return (
     <div>
@@ -66,7 +74,11 @@ export const TweetsContainer = (props) => {
       {isLoading && 'loading'}
       {!isLoading &&
         filteredTweets.map((tweet) => (
-          <Tweet username={tweet.displayName} content={tweet.content} promoted={tweet.promoted}></Tweet>
+          <Tweet
+            username={tweet.displayName}
+            content={tweet.content}
+            promoted={tweet.promoted}
+          ></Tweet>
         ))}
     </div>
   );

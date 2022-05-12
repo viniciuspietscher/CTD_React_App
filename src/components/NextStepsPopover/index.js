@@ -1,4 +1,10 @@
-import { nextSteps } from '../../constants/nextSteps';
+/*  COMPONENT NOTES 
+    - This component uses a JSS approach to styling.
+    - Constants related to this component are placed in a constants folder in
+      the same directory
+*/
+
+import { nextSteps } from './constants';
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({

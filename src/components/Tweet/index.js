@@ -1,3 +1,11 @@
+/*  COMPONENT NOTES 
+    - This component uses a JSS approach to styling
+    - JSS supports "SASS" syntax and lets us next selectors with the '&'
+    - createUse styles returns a hook to us that can be invoked in the component
+    - useStyles is a hook that takes an argument of a props object
+    - We can use these props to conditionally render styles
+*/
+
 import { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 

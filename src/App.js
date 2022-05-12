@@ -1,3 +1,9 @@
+/*  COMPONENT NOTES 
+    - Normally the App component should not be this logic-based.
+    - The App component wraps everything and should primarily be used for
+      routing.
+*/
+
 import React from 'react';
 import { useState } from 'react';
 import { TweetsContainer } from './components/TweetsContainer';
