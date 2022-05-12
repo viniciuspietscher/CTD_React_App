@@ -1,3 +1,13 @@
-.tweetsContainer {
-    border: 1px solid blue;
+.newTweetButton {
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    border-radius: 3px;
+    margin: 10px;
+    color: white;
+    background-color: #3685ff
+}
+
+.newTweetButton:hover {
+    background-color: #2161c4
 }
