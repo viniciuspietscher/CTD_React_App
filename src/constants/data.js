@@ -3,7 +3,7 @@ const response = [
     displayName: 'Oprah Winfrey',
     content:
       'HI TWITTERS . THANK YOU FOR A WARM WELCOME. FEELING REALLY 21st CENTURY .',
-      promoted: true,
+    promoted: true,
   },
   {
     displayName: 'Jack Dorsey',

@@ -5,6 +5,7 @@
   "dependencies": {
     "@mui/icons-material": "^5.5.1",
     "node-sass": "^7.0.1",
+    "prettier": "^2.6.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-jss": "^10.9.0",
@@ -12,11 +13,14 @@
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
   },
+  "devDependencies": {
+    "eslint-config-airbnb": "^19.0.4",
+    "husky": "^8.0.0"
+  },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "format": "prettier --write \"./**/*.{js,jsx,json}\"",
+    "prepare": "husky install\n"
   },
   "eslintConfig": {
     "extends": [
@@ -24,6 +28,12 @@
       "react-app/jest",
       "airbnb"
     ]
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true
   },
   "browserslist": {
     "production": [
@@ -36,8 +46,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "eslint-config-airbnb": "^19.0.4"
   }
 }
