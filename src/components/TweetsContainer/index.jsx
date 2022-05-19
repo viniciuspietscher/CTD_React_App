@@ -3,47 +3,37 @@
     - Styles are imported as an object as the default export
 */
 
-import { useState, useEffect, useRef } from 'react';
-// import { mockData } from '../../constants/data';
+import { useState, useRef } from 'react';
+import { useFetch } from '../../hooks/useFetch';
 import Tweet from '../Tweet';
 import styles from './styles.module.css';
 
 export const TweetsContainer = (props) => {
   // State
-  const [tweets, setTweets] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [isNewTweetFormOpen, setIsNewTweetFormOpen] = useState(false);
 
   // Ref
   const searchElement = useRef();
 
-  // Effects
-  useEffect(() => {
-    setIsLoading(true);
-    // mockData.then((resp) => {
-    //   console.log(resp);
-    //   setIsLoading(false);
-    //   setTweets(resp);
-    // });
-  }, []);
+  // Hooks
+  const { response: tweets = [], loading } = useFetch(
+    'http://localhost:3000/tweets'
+  );
+  // You can reassign a variable name during destrucutring
+  // - In this case we take response and create a new variable named tweets
+  // We also assign a default value to response in case nothing is returned
+  // - In this case we assign response/tweets to an empty array
 
   // Handlers
   const handleUpdateSearchText = (event) => setSearchText(event.target.value);
-  const handleClearSearchText = (event) => setSearchText('');
-  const handleOpenTweetForm = (event) => setIsNewTweetFormOpen(true);
-  const handleFocusOnSearchField = (event) => searchElement.current.focus();
+  const handleClearSearchText = () => setSearchText('');
+  const handleOpenTweetForm = () => setIsNewTweetFormOpen(true);
+  const handleFocusOnSearchField = () => searchElement.current.focus();
 
   const filteredTweets = tweets.filter((post) =>
     post.displayName.toLowerCase().includes(searchText.toLowerCase())
   );
-
-  /* NOTES
-     - When an item in the dependency array changes, then the anonymous function
-       runs
-     - If the array is empty, it only runs when the component initially mounts
-     - If it is omitted, it runs every time the component re-renders
-  */
 
   return (
     <div>
@@ -71,14 +61,14 @@ export const TweetsContainer = (props) => {
         <button onClick={handleClearSearchText}>Clear</button>
         <button onClick={handleFocusOnSearchField}>Focus Input</button>
       </div>
-      {isLoading && 'loading'}
-      {!isLoading &&
+      {loading && 'Loading...'}
+      {!loading &&
         filteredTweets.map((tweet) => (
           <Tweet
             username={tweet.displayName}
             content={tweet.content}
             promoted={tweet.promoted}
-          ></Tweet>
+          />
         ))}
     </div>
   );
