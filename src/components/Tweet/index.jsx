@@ -6,7 +6,7 @@
     - We can use these props to conditionally render styles
 */
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
@@ -32,7 +32,7 @@ const useStyles = createUseStyles({
   },
 });
 
-export const Tweet = ({ username, content, promoted }) => {
+export default function Tweet({ username, content, promoted }) {
   // State
   const [likes, setLikes] = useState(0);
 
@@ -41,8 +41,8 @@ export const Tweet = ({ username, content, promoted }) => {
   const styles = useStyles({ promoted, liked });
 
   // Handlers
-  const handleAddLike = (event) => setLikes(likes + 1);
-  const handleRemoveLike = (event) => setLikes(likes - 1);
+  const handleAddLike = () => setLikes(likes + 1);
+  const handleRemoveLike = () => setLikes(likes - 1);
 
   return (
     <div className={styles.root}>
@@ -61,4 +61,4 @@ export const Tweet = ({ username, content, promoted }) => {
       )}
     </div>
   );
-};
+}

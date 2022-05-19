@@ -4,8 +4,8 @@
 */
 
 import { useState, useEffect, useRef } from 'react';
-import { mockData } from '../../constants/data';
-import { Tweet } from '../Tweet';
+// import { mockData } from '../../constants/data';
+import Tweet from '../Tweet';
 import styles from './styles.module.css';
 
 export const TweetsContainer = (props) => {
@@ -21,11 +21,11 @@ export const TweetsContainer = (props) => {
   // Effects
   useEffect(() => {
     setIsLoading(true);
-    mockData.then((resp) => {
-      console.log(resp);
-      setIsLoading(false);
-      setTweets(resp);
-    });
+    // mockData.then((resp) => {
+    //   console.log(resp);
+    //   setIsLoading(false);
+    //   setTweets(resp);
+    // });
   }, []);
 
   // Handlers

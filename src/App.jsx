@@ -1,14 +1,13 @@
-/*  COMPONENT NOTES 
+/*  COMPONENT NOTES
     - Normally the App component should not be this logic-based.
     - The App component wraps everything and should primarily be used for
       routing.
 */
 
-import React from 'react';
-import { useState } from 'react';
-import { TweetsContainer } from './components/TweetsContainer';
-import { NextStepsPopover } from './components/NextStepsPopover';
+import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
+import { TweetsContainer } from './components/TweetsContainer';
+import NextStepsPopover from './components/NextStepsPopover';
 
 const useStyles = createUseStyles({
   root: {
@@ -42,7 +41,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const App = () => {
+function App() {
   // State
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [nextStepsPopoverOpen, setNextStepsPopoverOpen] = useState(false);
@@ -51,15 +50,19 @@ const App = () => {
   const styles = useStyles();
 
   // Handlers
-  const handleOpenNextStepsPopover = (event) => setNextStepsPopoverOpen(true);
-  const handleCloseNextStepsPopover = (event) => setNextStepsPopoverOpen(false);
-  const handleLoginClick = (event) => setIsLoggedIn(true);
+  const handleOpenNextStepsPopover = () => setNextStepsPopoverOpen(true);
+  const handleCloseNextStepsPopover = () => setNextStepsPopoverOpen(false);
+  const handleLoginClick = () => setIsLoggedIn(true);
 
   return (
     <div className={styles.root}>
       <h1>CTD Twitter</h1>
       {!isLoggedIn && (
-        <button onClick={handleLoginClick} className={styles.loginButton}>
+        <button
+          type="button"
+          onClick={handleLoginClick}
+          className={styles.loginButton}
+        >
           Login
         </button>
       )}
@@ -76,6 +79,6 @@ const App = () => {
       )}
     </div>
   );
-};
+}
 
 export default App;

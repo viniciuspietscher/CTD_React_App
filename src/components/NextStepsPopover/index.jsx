@@ -1,11 +1,11 @@
-/*  COMPONENT NOTES 
+/*  COMPONENT NOTES
     - This component uses a JSS approach to styling.
     - Constants related to this component are placed in a constants folder in
       the same directory
 */
-
-import { nextSteps } from './constants';
+import React from 'react';
 import { createUseStyles } from 'react-jss';
+import nextSteps from './constants';
 
 const useStyles = createUseStyles({
   background: {
@@ -27,7 +27,7 @@ const useStyles = createUseStyles({
   },
 });
 
-export const NextStepsPopover = (props) => {
+export default function NextStepsPopover(props) {
   const styles = useStyles();
   return (
     <div onClick={props.handleClose} className={styles.background}>
@@ -41,4 +41,4 @@ export const NextStepsPopover = (props) => {
       </div>
     </div>
   );
-};
+}
