@@ -32,7 +32,7 @@ const useStyles = createUseStyles({
   },
 });
 
-export default function Tweet({ username, content, promoted }) {
+export function Tweet({ username, content, promoted }) {
   // State
   const [likes, setLikes] = useState(0);
 
