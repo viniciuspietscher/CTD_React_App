@@ -5,8 +5,9 @@
 
 import { useState, useRef } from 'react';
 import { useFetch } from '../../hooks/useFetch';
-import Tweet from '../Tweet';
+import { Tweet } from '../Tweet';
 import styles from './styles.module.css';
+import { NewTweetPopover } from '../NewTweetPopover';
 
 export const TweetsContainer = (props) => {
   // State
@@ -29,6 +30,7 @@ export const TweetsContainer = (props) => {
   const handleUpdateSearchText = (event) => setSearchText(event.target.value);
   const handleClearSearchText = () => setSearchText('');
   const handleOpenTweetForm = () => setIsNewTweetFormOpen(true);
+  const handleCloseTweetForm = () => setIsNewTweetFormOpen(false);
   const handleFocusOnSearchField = () => searchElement.current.focus();
 
   const filteredTweets = tweets.filter((post) =>
@@ -36,40 +38,36 @@ export const TweetsContainer = (props) => {
   );
 
   return (
-    <div>
-      {!isNewTweetFormOpen && (
+    <>
+      <div>
         <button className={styles.newTweetButton} onClick={handleOpenTweetForm}>
           + New Tweet
         </button>
-      )}
-      {isNewTweetFormOpen && (
-        <>
-          <div>Enter your tweet here:</div>
-          <textarea id="tweet-input" />
-          <button>Post Tweet</button>
-        </>
-      )}
-      <div className="search">
-        <label htmlFor="search">Search</label>
-        <input
-          id="search"
-          ref={searchElement}
-          onChange={handleUpdateSearchText}
-          value={searchText}
-          style={{ fontSize: 16, padding: 5 }}
-        />
-        <button onClick={handleClearSearchText}>Clear</button>
-        <button onClick={handleFocusOnSearchField}>Focus Input</button>
-      </div>
-      {loading && 'Loading...'}
-      {!loading &&
-        filteredTweets.map((tweet) => (
-          <Tweet
-            username={tweet.displayName}
-            content={tweet.content}
-            promoted={tweet.promoted}
+        <div className="search">
+          <label htmlFor="search">Search</label>
+          <input
+            id="search"
+            ref={searchElement}
+            onChange={handleUpdateSearchText}
+            value={searchText}
+            style={{ fontSize: 16, padding: 5 }}
           />
-        ))}
-    </div>
+          <button onClick={handleClearSearchText}>Clear</button>
+          <button onClick={handleFocusOnSearchField}>Focus Input</button>
+        </div>
+        {loading && 'Loading...'}
+        {!loading &&
+          filteredTweets.map((tweet) => (
+            <Tweet
+              username={tweet.displayName}
+              content={tweet.content}
+              promoted={tweet.promoted}
+            />
+          ))}
+      </div>
+      {isNewTweetFormOpen && (
+        <NewTweetPopover handleClose={handleCloseTweetForm} />
+      )}
+    </>
   );
 };
