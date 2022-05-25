@@ -84,10 +84,7 @@ function App() {
           </button>
         )}
         {isLoggedIn && (
-          <button
-            className={styles.loginButton}
-            onClick={handleOpenTweetForm}
-          >
+          <button className={styles.loginButton} onClick={handleOpenTweetForm}>
             + New Tweet
           </button>
         )}
