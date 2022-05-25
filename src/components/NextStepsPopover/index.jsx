@@ -27,12 +27,12 @@ const useStyles = createUseStyles({
   },
 });
 
-export default function NextStepsPopover(props) {
+export function NextStepsPopover(props) {
   const styles = useStyles();
   return (
     <div onClick={props.handleClose} className={styles.background}>
       <div className={styles.container}>
-        <span>Options for next steps:</span>
+        <span>Ideas for Next Steps</span>
         <ol>
           {nextSteps.map((step) => (
             <li>{step}</li>

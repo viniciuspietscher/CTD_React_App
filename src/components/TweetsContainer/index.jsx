@@ -7,12 +7,10 @@ import { useState, useRef } from 'react';
 import { useFetch } from '../../hooks/useFetch';
 import { Tweet } from '../Tweet';
 import styles from './styles.module.css';
-import { NewTweetPopover } from '../NewTweetPopover';
 
 export const TweetsContainer = (props) => {
   // State
   const [searchText, setSearchText] = useState('');
-  const [isNewTweetFormOpen, setIsNewTweetFormOpen] = useState(false);
 
   // Ref
   const searchElement = useRef();
@@ -29,8 +27,6 @@ export const TweetsContainer = (props) => {
   // Handlers
   const handleUpdateSearchText = (event) => setSearchText(event.target.value);
   const handleClearSearchText = () => setSearchText('');
-  const handleOpenTweetForm = () => setIsNewTweetFormOpen(true);
-  const handleCloseTweetForm = () => setIsNewTweetFormOpen(false);
   const handleFocusOnSearchField = () => searchElement.current.focus();
 
   const filteredTweets = tweets.filter((post) =>
@@ -40,9 +36,6 @@ export const TweetsContainer = (props) => {
   return (
     <>
       <div>
-        <button className={styles.newTweetButton} onClick={handleOpenTweetForm}>
-          + New Tweet
-        </button>
         <div className="search">
           <label htmlFor="search">Search</label>
           <input
@@ -69,9 +62,6 @@ export const TweetsContainer = (props) => {
           </div>
         </div>
       </div>
-      {isNewTweetFormOpen && (
-        <NewTweetPopover handleClose={handleCloseTweetForm} />
-      )}
     </>
   );
 };

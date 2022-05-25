@@ -7,7 +7,9 @@
 import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { TweetsContainer } from './components/TweetsContainer';
-import NextStepsPopover from './components/NextStepsPopover';
+import { NextStepsPopover } from './components/NextStepsPopover';
+import { AppBar } from './components/AppBar';
+import { NewTweetPopover } from './components/NewTweetPopover';
 
 const useStyles = createUseStyles({
   root: {
@@ -17,6 +19,7 @@ const useStyles = createUseStyles({
     minHeight: '100vh',
   },
   footer: {
+    boxSizing: 'border-box',
     position: 'fixed',
     left: 0,
     bottom: 0,
@@ -24,8 +27,11 @@ const useStyles = createUseStyles({
     backgroundColor: '#222',
     color: 'white',
     fontSize: 14,
-    padding: 20,
+    padding: '10px 20px',
     pointer: '',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   loginButton: {
     padding: 8,
@@ -39,12 +45,21 @@ const useStyles = createUseStyles({
       backgroundColor: '#2161c4',
     },
   },
+  nextSteps: {
+    padding: 5,
+    borderRadius: 5,
+    '&:hover': {
+      cursor: 'pointer',
+      backgroundColor: '#d8d8d821',
+    },
+  },
 });
 
 function App() {
   // State
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [nextStepsPopoverOpen, setNextStepsPopoverOpen] = useState(false);
+  const [isNewTweetFormOpen, setIsNewTweetFormOpen] = useState(false);
 
   // Hooks
   const styles = useStyles();
@@ -52,30 +67,50 @@ function App() {
   // Handlers
   const handleOpenNextStepsPopover = () => setNextStepsPopoverOpen(true);
   const handleCloseNextStepsPopover = () => setNextStepsPopoverOpen(false);
+  const handleOpenTweetForm = () => setIsNewTweetFormOpen(true);
+  const handleCloseTweetForm = () => setIsNewTweetFormOpen(false);
   const handleLoginClick = () => setIsLoggedIn(true);
 
   return (
     <div className={styles.root}>
-      <h1>CTD Twitter</h1>
-      {!isLoggedIn && (
-        <button
-          type="button"
-          onClick={handleLoginClick}
-          className={styles.loginButton}
-        >
-          Login
-        </button>
-      )}
+      <AppBar title="CTD Twitter">
+        {!isLoggedIn && (
+          <button
+            type="button"
+            onClick={handleLoginClick}
+            className={styles.loginButton}
+          >
+            Login
+          </button>
+        )}
+        {isLoggedIn && (
+          <button
+            className={styles.loginButton}
+            onClick={handleOpenTweetForm}
+          >
+            + New Tweet
+          </button>
+        )}
+      </AppBar>
       {isLoggedIn && (
         <>
           <TweetsContainer />
           <footer className={styles.footer}>
-            <span onClick={handleOpenNextStepsPopover}>Open next steps</span>
+            <span
+              className={styles.nextSteps}
+              onClick={handleOpenNextStepsPopover}
+            >
+              Ideas for Next Steps
+            </span>
+            <span>Karson Kalt 2022</span>
           </footer>
         </>
       )}
       {nextStepsPopoverOpen && (
         <NextStepsPopover handleClose={handleCloseNextStepsPopover} />
+      )}
+      {isNewTweetFormOpen && (
+        <NewTweetPopover handleClose={handleCloseTweetForm} />
       )}
     </div>
   );
