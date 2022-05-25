@@ -55,15 +55,19 @@ export const TweetsContainer = (props) => {
           <button onClick={handleClearSearchText}>Clear</button>
           <button onClick={handleFocusOnSearchField}>Focus Input</button>
         </div>
-        {loading && 'Loading...'}
-        {!loading &&
-          filteredTweets.map((tweet) => (
-            <Tweet
-              username={tweet.displayName}
-              content={tweet.content}
-              promoted={tweet.promoted}
-            />
-          ))}
+        <div className={styles.tweetsContainerWrapper}>
+          <div className={styles.tweetsContainer}>
+            {loading && 'Loading...'}
+            {!loading &&
+              filteredTweets.map((tweet) => (
+                <Tweet
+                  username={tweet.displayName}
+                  content={tweet.content}
+                  promoted={tweet.promoted}
+                />
+              ))}
+          </div>
+        </div>
       </div>
       {isNewTweetFormOpen && (
         <NewTweetPopover handleClose={handleCloseTweetForm} />

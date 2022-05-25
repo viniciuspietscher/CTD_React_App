@@ -17,17 +17,32 @@ const useStyles = createUseStyles({
     padding: 20,
     marginBottom: 20,
     backgroundColor: (props) => (props.promoted ? '#fff7e3' : '#fff'),
+    boxShadow: 'rgb(210 210 210) 0px 3px 6px 0px',
+  },
+  username: {
+    fontWeight: 'bold',
+  },
+  tweeBody: {
+    fontSize: 14,
+    paddingLeft: 20,
+    borderLeft: '3px solid #0000001a',
+    color: '#000000a1',
+  },
+  likes: {
+    color: '#000000a1',
+    fontSize: 12,
   },
   button: {
     padding: 8,
-    fontSize: 16,
-    border: 'none',
+    fontSize: 12,
     borderRadius: 3,
-    margin: 10,
-    color: 'white',
-    backgroundColor: (props) => (props.liked ? '#ff4e4e' : '#3685ff'),
+    marginRight: 10,
+    background: 'none',
+    color: (props) => (props.liked ? '#ff4e4e' : '#3685ff'),
+    borderWidth: 1,
+    borderColor: (props) => (props.liked ? '#ff4e4e' : '#3685ff'),
     '&:hover': {
-      backgroundColor: (props) => (props.liked ? '#d24242' : '#2161c4'),
+      backgroundColor: '#b5b5b51a',
     },
   },
 });
@@ -46,9 +61,8 @@ export function Tweet({ username, content, promoted }) {
 
   return (
     <div className={styles.root}>
-      <h3>{username}</h3>
-      <p>{content}</p>
-      <span>{likes} Likes</span>
+      <span className={styles.username}>{username}</span>
+      <p className={styles.tweeBody}>{content}</p>
       {likes === 0 && (
         <button onClick={handleAddLike} className={styles.button}>
           Like
@@ -59,6 +73,7 @@ export function Tweet({ username, content, promoted }) {
           Remove Like
         </button>
       )}
+      <span className={styles.likes}>{likes} Likes</span>
     </div>
   );
 }

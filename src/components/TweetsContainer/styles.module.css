@@ -11,3 +11,14 @@
 .newTweetButton:hover {
     background-color: #2161c4
 }
+
+.tweetsContainer {
+    max-width: 500px;
+    margin-bottom: 50px;
+}
+
+.tweetsContainerWrapper {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
