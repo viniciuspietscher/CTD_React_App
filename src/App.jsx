@@ -10,6 +10,7 @@ import { TweetsContainer } from './components/TweetsContainer';
 import { NextStepsPopover } from './components/NextStepsPopover';
 import { AppBar } from './components/AppBar';
 import { NewTweetPopover } from './components/NewTweetPopover';
+import { Edit2 } from 'react-feather';
 
 const useStyles = createUseStyles({
   root: {
@@ -53,6 +54,15 @@ const useStyles = createUseStyles({
       backgroundColor: '#d8d8d821',
     },
   },
+  icon: {
+    cursor: 'pointer',
+    marginRight: 15,
+    padding: 8,
+    borderRadius: 5,
+    '&:hover': {
+      backgroundColor: '#3f3f3f',
+    },
+  },
 });
 
 function App() {
@@ -84,9 +94,10 @@ function App() {
           </button>
         )}
         {isLoggedIn && (
-          <button className={styles.loginButton} onClick={handleOpenTweetForm}>
-            + New Tweet
-          </button>
+          <Edit2 onClick={handleOpenTweetForm} className={styles.icon} />
+          // <button className={styles.loginButton} onClick={handleOpenTweetForm}>
+          //   + New Tweet
+          // </button>
         )}
       </AppBar>
       {isLoggedIn && (
