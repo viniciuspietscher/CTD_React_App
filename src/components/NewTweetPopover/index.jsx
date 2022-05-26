@@ -71,17 +71,39 @@ export function NewTweetPopover({ handleClose }) {
   const [tweet, setTweet] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(undefined);
+  const [username, setUsername] = useState('');
 
   const characterCount = tweet.length;
-  const MAX_CHARACTERS = 120; // Constant convention is all caps
+  const MAX_CHARACTERS = 30; // Constant convention is all caps
   const WARNING_CHARACTERS = 20; // Constant convention is all caps
   const pastWarningCharacters =
     characterCount >= MAX_CHARACTERS - WARNING_CHARACTERS;
 
   const styles = useStyles(pastWarningCharacters);
 
-  const handlePostTweet = async () => {
+  const handlePostClick = async () => {
+    if (tweet.trim() === '') {
+      setError({ message: 'You can not submit a blank string' });
+      return;
+    }
     setLoading(true);
+
+    // ES6 way of POST fetch using.then
+
+    // fetch('http://localhost:3000/tweets', {
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     displayName: username,
+    //     content: tweet,
+    //   }),
+    // })
+    //   .then((resp) => resp.json())
+
+    // ES8 Async / Await
     try {
       const resp = await fetch('http://localhost:3000/tweets', {
         headers: {
@@ -90,7 +112,7 @@ export function NewTweetPopover({ handleClose }) {
         },
         method: 'POST',
         body: JSON.stringify({
-          displayName: 'User',
+          displayName: username,
           content: tweet,
         }),
       });
@@ -105,6 +127,12 @@ export function NewTweetPopover({ handleClose }) {
   const handleTweetChange = (event) => {
     if (event.target.value.length <= MAX_CHARACTERS)
       setTweet(event.target.value);
+  };
+
+  const handleClearTweetClick = () => setTweet('');
+
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
   };
 
   return (
@@ -124,13 +152,20 @@ export function NewTweetPopover({ handleClose }) {
               onChange={handleTweetChange}
               value={tweet}
             />
-            <button className={styles.button} onClick={handlePostTweet}>
-              Send
+            <input
+              type="text"
+              name="displayName"
+              onChange={handleUsernameChange}
+              value={username}
+            />
+            <button onClick={handleClearTweetClick}>Clear</button>
+            <button className={styles.button} onClick={handlePostClick}>
+              Post
             </button>
             <span className={styles.characterCount}>
               {characterCount} / {MAX_CHARACTERS}
             </span>
-            {error && <span>{error}</span>}
+            {error && <span>{error.message}</span>}
           </>
         )}
       </div>
