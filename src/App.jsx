@@ -11,6 +11,7 @@ import { NextStepsPopover } from './components/NextStepsPopover';
 import { AppBar } from './components/AppBar';
 import { NewTweetPopover } from './components/NewTweetPopover';
 import { Edit2 } from 'react-feather';
+import { Button } from './ui_components';
 
 const useStyles = createUseStyles({
   root: {
@@ -33,18 +34,6 @@ const useStyles = createUseStyles({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  loginButton: {
-    padding: 8,
-    fontSize: 16,
-    border: 'none',
-    borderRadius: 3,
-    margin: 10,
-    color: 'white',
-    backgroundColor: '#3685ff',
-    '&:hover': {
-      backgroundColor: '#2161c4',
-    },
   },
   nextSteps: {
     padding: 5,
@@ -85,19 +74,10 @@ function App() {
     <div className={styles.root}>
       <AppBar title="CTD Twitter">
         {!isLoggedIn && (
-          <button
-            type="button"
-            onClick={handleLoginClick}
-            className={styles.loginButton}
-          >
-            Login
-          </button>
+          <Button onClick={handleLoginClick}>Login</Button>
         )}
         {isLoggedIn && (
           <Edit2 onClick={handleOpenTweetForm} className={styles.icon} />
-          // <button className={styles.loginButton} onClick={handleOpenTweetForm}>
-          //   + New Tweet
-          // </button>
         )}
       </AppBar>
       {isLoggedIn && (

@@ -8,6 +8,7 @@
 
 import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
+import { Button } from '../../ui_components';
 
 const useStyles = createUseStyles({
   root: {
@@ -32,19 +33,6 @@ const useStyles = createUseStyles({
     color: '#000000a1',
     fontSize: 12,
   },
-  button: {
-    padding: 8,
-    fontSize: 12,
-    borderRadius: 3,
-    marginRight: 10,
-    background: 'none',
-    color: (props) => (props.liked ? '#ff4e4e' : '#3685ff'),
-    borderWidth: 1,
-    borderColor: (props) => (props.liked ? '#ff4e4e' : '#3685ff'),
-    '&:hover': {
-      backgroundColor: '#b5b5b51a',
-    },
-  },
 });
 
 export function Tweet({ username, content, promoted }) {
@@ -63,16 +51,8 @@ export function Tweet({ username, content, promoted }) {
     <div className={styles.root}>
       <span className={styles.username}>{username}</span>
       <p className={styles.tweeBody}>{content}</p>
-      {likes === 0 && (
-        <button onClick={handleAddLike} className={styles.button}>
-          Like
-        </button>
-      )}
-      {likes > 0 && (
-        <button onClick={handleRemoveLike} className={styles.button}>
-          Remove Like
-        </button>
-      )}
+      {likes === 0 && <Button onClick={handleAddLike}>Like</Button>}
+      {likes > 0 && <Button onClick={handleRemoveLike}>Remove Like</Button>}
       <span className={styles.likes}>{likes} Likes</span>
     </div>
   );

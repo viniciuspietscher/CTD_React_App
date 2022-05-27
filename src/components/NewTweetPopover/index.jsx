@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { X } from 'react-feather';
 import ReactLoading from 'react-loading';
+import { Button } from '../../ui_components';
 
 const useStyles = createUseStyles({
   background: {
@@ -51,19 +52,6 @@ const useStyles = createUseStyles({
     fontFamily: 'Arial',
     color: (pastWarningCharacters) =>
       pastWarningCharacters ? '#ff4e4e' : '#797979',
-  },
-  button: {
-    padding: 8,
-    fontSize: 16,
-    border: 'none',
-    borderRadius: 3,
-    marginTop: 10,
-    marginRight: 10,
-    color: 'white',
-    backgroundColor: '#3685ff',
-    '&:hover': {
-      backgroundColor: '#2161c4',
-    },
   },
 });
 
@@ -158,10 +146,10 @@ export function NewTweetPopover({ handleClose }) {
               onChange={handleUsernameChange}
               value={username}
             />
-            <button onClick={handleClearTweetClick}>Clear</button>
-            <button className={styles.button} onClick={handlePostClick}>
+            <Button onClick={handleClearTweetClick}>Clear</Button>
+            <Button variant="contained" onClick={handlePostClick}>
               Post
-            </button>
+            </Button>
             <span className={styles.characterCount}>
               {characterCount} / {MAX_CHARACTERS}
             </span>
