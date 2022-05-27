@@ -45,7 +45,7 @@ const Button = ({ children, variant = 'outlined', onClick }) => {
 };
 
 Button.propTypes = {
-  variant: PropTypes.oneOf(['outlined', 'contained']).isRequired,
+  variant: PropTypes.oneOf(['outlined', 'contained']),
   children: PropTypes.string,
   onClick: PropTypes.func,
 };
