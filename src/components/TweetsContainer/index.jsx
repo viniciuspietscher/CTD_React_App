@@ -8,7 +8,7 @@ import { useFetch } from '../../hooks/useFetch';
 import { Tweet } from '../Tweet';
 import styles from './styles.module.css';
 
-export const TweetsContainer = (props) => {
+export const TweetsContainer = () => {
   // State
   const [searchText, setSearchText] = useState('');
 
@@ -29,6 +29,7 @@ export const TweetsContainer = (props) => {
   const handleClearSearchText = () => setSearchText('');
   const handleFocusOnSearchField = () => searchElement.current.focus();
 
+  // Variables
   const filteredTweets = tweets.filter((post) =>
     post.displayName.toLowerCase().includes(searchText.toLowerCase())
   );

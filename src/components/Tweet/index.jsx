@@ -9,6 +9,7 @@
 import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { Button } from '../../ui_components';
+import PropTypes from 'prop-types';
 
 const useStyles = createUseStyles({
   root: {
@@ -35,7 +36,7 @@ const useStyles = createUseStyles({
   },
 });
 
-export function Tweet({ username, content, promoted }) {
+function Tweet({ username, content, promoted = false }) {
   // State
   const [likes, setLikes] = useState(0);
 
@@ -57,3 +58,11 @@ export function Tweet({ username, content, promoted }) {
     </div>
   );
 }
+
+Tweet.propTypes = {
+  username: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  promoted: PropTypes.bool,
+};
+
+export { Tweet };
