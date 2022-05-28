@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
 import ReactLoading from 'react-loading';
 import { Button, Dialog } from '../../ui_components';
+import { useUser } from '../../contexts/useUser';
 
 const useStyles = createUseStyles({
   tweetContainer: {
@@ -26,7 +27,9 @@ function NewTweetPopover({ handleClose }) {
   const [tweet, setTweet] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(undefined);
-  const [username, setUsername] = useState('');
+
+  // Context
+  const {username} = useUser();
 
   // Variables
   const characterCount = tweet.length;
@@ -86,9 +89,6 @@ function NewTweetPopover({ handleClose }) {
       setTweet(event.target.value);
   };
   const handleClearTweetClick = () => setTweet('');
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
 
   return (
     <Dialog title="New Tweet" handleClose={handleClose}>
@@ -106,14 +106,6 @@ function NewTweetPopover({ handleClose }) {
             <span className={styles.characterCount}>
               {characterCount} / {MAX_CHARACTERS}
             </span>
-          </div>
-          <div>
-            <input
-              type="text"
-              name="displayName"
-              onChange={handleUsernameChange}
-              value={username}
-            />
           </div>
           <Button onClick={handleClearTweetClick}>Clear</Button>
           <Button variant="contained" onClick={handlePostClick}>

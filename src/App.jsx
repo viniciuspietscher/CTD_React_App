@@ -8,10 +8,12 @@ import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { TweetsContainer } from './components/TweetsContainer';
 import { NextStepsPopover } from './components/NextStepsPopover';
+import { LoginPopover } from './components/LoginPopover';
 import { AppBar } from './components/AppBar';
 import { NewTweetPopover } from './components/NewTweetPopover';
 import { Edit2 } from 'react-feather';
 import { Button, IconButton } from './ui_components';
+import { UserContextProvider } from './contexts/UserContext';
 
 const useStyles = createUseStyles({
   root: {
@@ -47,51 +49,66 @@ const useStyles = createUseStyles({
 
 function App() {
   // State
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoginPopoverOpen, setIsLoginPopoverOpen] = useState(false);
   const [nextStepsPopoverOpen, setNextStepsPopoverOpen] = useState(false);
   const [isNewTweetFormOpen, setIsNewTweetFormOpen] = useState(false);
 
   // Hooks
   const styles = useStyles();
 
+  // Variables
+  // TODO this entire component needs to be moved down a level
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   // Handlers
   const handleOpenNextStepsPopover = () => setNextStepsPopoverOpen(true);
   const handleCloseNextStepsPopover = () => setNextStepsPopoverOpen(false);
+  const handleOpenLoginPopover = () => setIsLoginPopoverOpen(true);
+  const handleCloseLoginPopover = () => {
+    setIsLoginPopoverOpen(false);
+    setIsLoggedIn(true);
+  };
   const handleOpenTweetForm = () => setIsNewTweetFormOpen(true);
   const handleCloseTweetForm = () => setIsNewTweetFormOpen(false);
-  const handleLoginClick = () => setIsLoggedIn(true);
 
   return (
-    <div className={styles.root}>
-      <AppBar title="CTD Twitter">
-        {!isLoggedIn && <Button onClick={handleLoginClick}>Login</Button>}
+    <UserContextProvider>
+      <div className={styles.root}>
+        <AppBar title="CTD Twitter">
+          {!isLoggedIn && (
+            <Button onClick={handleOpenLoginPopover}>Login</Button>
+          )}
+          {isLoggedIn && (
+            <IconButton onClick={handleOpenTweetForm}>
+              <Edit2 />
+            </IconButton>
+          )}
+        </AppBar>
         {isLoggedIn && (
-          <IconButton onClick={handleOpenTweetForm}>
-            <Edit2 />
-          </IconButton>
+          <>
+            <TweetsContainer />
+            <footer className={styles.footer}>
+              <span
+                className={styles.nextSteps}
+                onClick={handleOpenNextStepsPopover}
+              >
+                Ideas for Next Steps
+              </span>
+              <span>Karson Kalt 2022</span>
+            </footer>
+          </>
         )}
-      </AppBar>
-      {isLoggedIn && (
-        <>
-          <TweetsContainer />
-          <footer className={styles.footer}>
-            <span
-              className={styles.nextSteps}
-              onClick={handleOpenNextStepsPopover}
-            >
-              Ideas for Next Steps
-            </span>
-            <span>Karson Kalt 2022</span>
-          </footer>
-        </>
-      )}
-      {nextStepsPopoverOpen && (
-        <NextStepsPopover handleClose={handleCloseNextStepsPopover} />
-      )}
-      {isNewTweetFormOpen && (
-        <NewTweetPopover handleClose={handleCloseTweetForm} />
-      )}
-    </div>
+        {nextStepsPopoverOpen && (
+          <NextStepsPopover handleClose={handleCloseNextStepsPopover} />
+        )}
+        {isNewTweetFormOpen && (
+          <NewTweetPopover handleClose={handleCloseTweetForm} />
+        )}
+        {isLoginPopoverOpen && (
+          <LoginPopover handleClose={handleCloseLoginPopover} />
+        )}
+      </div>
+    </UserContextProvider>
   );
 }
 
