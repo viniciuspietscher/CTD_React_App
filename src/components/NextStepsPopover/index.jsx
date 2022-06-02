@@ -5,7 +5,7 @@
 */
 import React from 'react';
 import nextSteps from './constants';
-import { Dialog } from '../../ui_components';
+import { Dialog } from '../../ui/components';
 import PropTypes from 'prop-types';
 
 function NextStepsPopover({ handleClose }) {

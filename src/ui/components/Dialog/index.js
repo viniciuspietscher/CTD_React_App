@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
 import { IconButton } from '../index';
 import { X } from 'react-feather';
+import { useTheme } from '../../../contexts/ThemeContext';
 
 const useStyles = createUseStyles({
   background: {
@@ -16,12 +17,12 @@ const useStyles = createUseStyles({
     backgroundColor: 'rgba(0,0,0,0.7)',
   },
   dialog: {
-    backgroundColor: '#fefefe',
+    backgroundColor: (props) => props.theme.container.background,
     margin: '15% auto',
     padding: 20,
     borderRadius: 10,
     minWidth: 300,
-    maxWidth: (maxWidth) => maxWidth,
+    maxWidth: (props) => props.maxWidth,
   },
   titleContainer: {
     display: 'flex',
@@ -35,7 +36,8 @@ const useStyles = createUseStyles({
 });
 
 const Dialog = ({ children, handleClose, title, maxWidth = 400 }) => {
-  const styles = useStyles(maxWidth);
+  const { theme } = useTheme();
+  const styles = useStyles({ theme, maxWidth });
   return (
     <div className={styles.background}>
       <div className={styles.dialog}>

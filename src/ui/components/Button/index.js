@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
+import { useTheme } from '../../../contexts/ThemeContext';
 
 const buttonStyles = {
   padding: 8,
@@ -8,35 +9,33 @@ const buttonStyles = {
   borderRadius: 3,
   borderWidth: 1,
   borderStyle: 'solid',
-  color: 'white',
-  '&:hover': {
-    backgroundColor: '#2161c4',
-  },
 };
 
 const useStyles = createUseStyles({
   contained: {
     ...buttonStyles,
     border: 'none',
-    color: 'white',
-    backgroundColor: '#3685ff',
+    color: (theme) => theme.primary.text,
+    backgroundColor: (theme) => theme.primary.main,
     '&:hover': {
-      backgroundColor: '#2161c4',
+      backgroundColor: (theme) => theme.primary.hover,
     },
   },
   outlined: {
     ...buttonStyles,
     background: 'none',
-    color: '#3685ff',
-    borderColor: '#3685ff',
+    color: (theme) => theme.primary.main,
+    borderColor: (theme) => theme.primary.main,
     '&:hover': {
-      backgroundColor: '#b5b5b51a',
+      backgroundColor: (theme) => theme.translucent[10],
     },
   },
 });
 
 const Button = ({ children, variant = 'outlined', onClick }) => {
-  const styles = useStyles();
+  const { theme } = useTheme();
+  const styles = useStyles(theme);
+
   return (
     <button onClick={onClick} className={styles[variant]}>
       {children}

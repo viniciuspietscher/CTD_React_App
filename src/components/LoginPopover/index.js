@@ -1,7 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Dialog } from '../../ui_components';
-import { useUser } from '../../contexts/useUser';
+import { Button, Dialog } from '../../ui/components';
+import { useUser } from '../../contexts/UserContext.jsx';
 
 function LoginPopover({ handleClose }) {
   // State

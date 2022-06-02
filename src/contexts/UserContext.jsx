@@ -1,16 +1,12 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useContext } from 'react';
 import { PropTypes } from 'prop-types';
 
-export const UserContext = createContext();
+const UserContext = createContext();
 
 const UserContextProvider = ({ children }) => {
   const [username, setUsername] = useState(null);
 
-  const setUsernameWrap = (string) => {
-    console.log('this fired');
-    setUsername(string);
-  };
-  const contextValue = { username, setUsername: setUsernameWrap };
+  const contextValue = { username, setUsername };
 
   return (
     <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
@@ -22,3 +18,7 @@ UserContextProvider.propTypes = {
 };
 
 export { UserContextProvider };
+
+export const useUser = () => {
+  return useContext(UserContext);
+};

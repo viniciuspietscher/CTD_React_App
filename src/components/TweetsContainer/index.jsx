@@ -5,6 +5,7 @@
 
 import { useState, useRef } from 'react';
 import { useFetch } from '../../hooks/useFetch';
+import { Button } from '../../ui/components';
 import { Tweet } from '../Tweet';
 import styles from './styles.module.css';
 
@@ -30,8 +31,10 @@ export const TweetsContainer = () => {
   const handleFocusOnSearchField = () => searchElement.current.focus();
 
   // Variables
-  const filteredTweets = tweets.filter((post) =>
-    post.displayName.toLowerCase().includes(searchText.toLowerCase())
+  const filteredTweets = tweets.filter(
+    (post) =>
+      post.displayName.toLowerCase().includes(searchText.toLowerCase()) ||
+      post.content.toLowerCase().includes(searchText.toLowerCase())
   );
 
   return (
@@ -46,8 +49,8 @@ export const TweetsContainer = () => {
             value={searchText}
             style={{ fontSize: 16, padding: 5 }}
           />
-          <button onClick={handleClearSearchText}>Clear</button>
-          <button onClick={handleFocusOnSearchField}>Focus Input</button>
+          <Button onClick={handleClearSearchText}>Clear</Button>
+          <Button onClick={handleFocusOnSearchField}>Focus Input</Button>
         </div>
         <div className={styles.tweetsContainerWrapper}>
           <div className={styles.tweetsContainer}>

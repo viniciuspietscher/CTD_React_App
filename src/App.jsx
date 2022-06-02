@@ -12,8 +12,9 @@ import { LoginPopover } from './components/LoginPopover';
 import { AppBar } from './components/AppBar';
 import { NewTweetPopover } from './components/NewTweetPopover';
 import { Edit2 } from 'react-feather';
-import { Button, IconButton } from './ui_components';
+import { Button, IconButton } from './ui/components';
 import { UserContextProvider } from './contexts/UserContext';
+import { ThemeContextProvider } from './contexts/ThemeContext';
 
 const useStyles = createUseStyles({
   root: {
@@ -72,43 +73,45 @@ function App() {
   const handleCloseTweetForm = () => setIsNewTweetFormOpen(false);
 
   return (
-    <UserContextProvider>
-      <div className={styles.root}>
-        <AppBar title="CTD Twitter">
-          {!isLoggedIn && (
-            <Button onClick={handleOpenLoginPopover}>Login</Button>
-          )}
+    <ThemeContextProvider>
+      <UserContextProvider>
+        <div className={styles.root}>
+          <AppBar title="CTD Twitter">
+            {!isLoggedIn && (
+              <Button onClick={handleOpenLoginPopover}>Login</Button>
+            )}
+            {isLoggedIn && (
+              <IconButton onClick={handleOpenTweetForm}>
+                <Edit2 />
+              </IconButton>
+            )}
+          </AppBar>
           {isLoggedIn && (
-            <IconButton onClick={handleOpenTweetForm}>
-              <Edit2 />
-            </IconButton>
+            <>
+              <TweetsContainer />
+              <footer className={styles.footer}>
+                <span
+                  className={styles.nextSteps}
+                  onClick={handleOpenNextStepsPopover}
+                >
+                  Ideas for Next Steps
+                </span>
+                <span>Karson Kalt 2022</span>
+              </footer>
+            </>
           )}
-        </AppBar>
-        {isLoggedIn && (
-          <>
-            <TweetsContainer />
-            <footer className={styles.footer}>
-              <span
-                className={styles.nextSteps}
-                onClick={handleOpenNextStepsPopover}
-              >
-                Ideas for Next Steps
-              </span>
-              <span>Karson Kalt 2022</span>
-            </footer>
-          </>
-        )}
-        {nextStepsPopoverOpen && (
-          <NextStepsPopover handleClose={handleCloseNextStepsPopover} />
-        )}
-        {isNewTweetFormOpen && (
-          <NewTweetPopover handleClose={handleCloseTweetForm} />
-        )}
-        {isLoginPopoverOpen && (
-          <LoginPopover handleClose={handleCloseLoginPopover} />
-        )}
-      </div>
-    </UserContextProvider>
+          {nextStepsPopoverOpen && (
+            <NextStepsPopover handleClose={handleCloseNextStepsPopover} />
+          )}
+          {isNewTweetFormOpen && (
+            <NewTweetPopover handleClose={handleCloseTweetForm} />
+          )}
+          {isLoginPopoverOpen && (
+            <LoginPopover handleClose={handleCloseLoginPopover} />
+          )}
+        </div>
+      </UserContextProvider>
+    </ThemeContextProvider>
   );
 }
 
