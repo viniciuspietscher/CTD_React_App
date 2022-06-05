@@ -10,13 +10,10 @@ import { Tweet } from '../Tweet';
 import styles from './styles.module.css';
 
 export const TweetsContainer = () => {
-  // State
-  const [searchText, setSearchText] = useState('');
-
-  // Ref
   const searchElement = useRef();
 
-  // Hooks
+  const [searchText, setSearchText] = useState('');
+
   const { response: tweets = [], loading } = useFetch(
     'http://localhost:3000/tweets'
   );
@@ -25,17 +22,15 @@ export const TweetsContainer = () => {
   // We also assign a default value to response in case nothing is returned
   // - In this case we assign response/tweets to an empty array
 
-  // Handlers
-  const handleUpdateSearchText = (event) => setSearchText(event.target.value);
-  const handleClearSearchText = () => setSearchText('');
-  const handleFocusOnSearchField = () => searchElement.current.focus();
-
-  // Variables
   const filteredTweets = tweets.filter(
     (post) =>
       post.displayName.toLowerCase().includes(searchText.toLowerCase()) ||
       post.content.toLowerCase().includes(searchText.toLowerCase())
   );
+
+  const handleUpdateSearchText = (event) => setSearchText(event.target.value);
+  const handleClearSearchText = () => setSearchText('');
+  const handleFocusOnSearchField = () => searchElement.current.focus();
 
   return (
     <>

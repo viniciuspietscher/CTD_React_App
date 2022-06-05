@@ -44,15 +44,11 @@ const useStyles = createUseStyles({
 });
 
 function Tweet({ username, content, promoted = false }) {
-  // State
-  const [likes, setLikes] = useState(0);
-
-  // Hooks
-  const liked = Boolean(likes); // gives us a true or false if it is liked
   const { theme } = useTheme();
   const styles = useStyles({ theme, promoted });
 
-  // Handlers
+  const [likes, setLikes] = useState(0);
+
   const handleAddLike = () => setLikes(likes + 1);
   const handleRemoveLike = () => setLikes(likes - 1);
 

@@ -23,25 +23,19 @@ const useStyles = createUseStyles({
 });
 
 function NewTweetPopover({ handleClose }) {
-  // State
+  const { username } = useUser();
+
   const [tweet, setTweet] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(undefined);
 
-  // Context
-  const { username } = useUser();
-
-  // Variables
   const characterCount = tweet.length;
-  const MAX_CHARACTERS = 30; // Constant convention is all caps
+  const MAX_CHARACTERS = 120; // Constant convention is all caps
   const WARNING_CHARACTERS = 20; // Constant convention is all caps
   const pastWarningCharacters =
     characterCount >= MAX_CHARACTERS - WARNING_CHARACTERS;
-
-  // Styles
   const styles = useStyles(pastWarningCharacters);
 
-  // Handlers
   const handlePostClick = async () => {
     if (tweet.trim() === '') {
       setError({ message: 'You can not submit a blank string' });
@@ -77,7 +71,7 @@ function NewTweetPopover({ handleClose }) {
           content: tweet,
         }),
       });
-      const json = await resp.json(); // should do something with this object
+      const json = await resp.json(); // TODO should do something with this object
       handleClose();
     } catch (error) {
       setLoading(false);
