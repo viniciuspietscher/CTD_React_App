@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
 
 const iconButtonStyles = {
-  display: 'flex',
+  display: 'inline-flex',
   cursor: 'pointer',
   padding: 5,
   '&:hover': {

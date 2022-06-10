@@ -24,5 +24,6 @@ export const lightTheme = {
     text: '#ffffff', // text on the primary color
     main: '#3685ff',
     hover: '#2161c4',
+    dark: '#004361',
   },
 };

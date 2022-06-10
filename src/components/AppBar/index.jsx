@@ -28,7 +28,7 @@ const useStyles = createUseStyles({
   title: {
     color: 'white',
     textDecoration: 'none',
-  }
+  },
 });
 
 function AppBar({ title }) {
