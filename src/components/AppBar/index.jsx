@@ -6,6 +6,7 @@ import { Edit2 } from 'react-feather';
 import { LoginPopover, NewTweetPopover } from '../';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { SignupPopover } from '../SignupPopover';
 
 const useStyles = createUseStyles({
   root: {
@@ -32,11 +33,17 @@ const useStyles = createUseStyles({
 });
 
 function AppBar({ title }) {
-  const { username } = useUser();
+  const { user } = useUser();
   const styles = useStyles();
 
+  const [isSignupPopoverOpen, setIsSignupPopoverOpen] = useState(false);
   const [isLoginPopoverOpen, setIsLoginPopoverOpen] = useState(false);
   const [isNewTweetFormOpen, setIsNewTweetFormOpen] = useState(false);
+
+  const handleOpenSignupPopover = () => setIsSignupPopoverOpen(true);
+  const handleCloseSignupPopover = () => {
+    setIsSignupPopoverOpen(false);
+  };
 
   const handleOpenLoginPopover = () => setIsLoginPopoverOpen(true);
   const handleCloseLoginPopover = () => {
@@ -53,16 +60,28 @@ function AppBar({ title }) {
           <span className={styles.title}>{title}</span>
         </Link>
         <div style={{ display: 'flex' }}>
-          {!username && <Button onClick={handleOpenLoginPopover}>Login</Button>}
-          {username && (
+          {!user && <Button onClick={handleOpenSignupPopover}>SignUp</Button>}
+          {user && (
             <IconButton onClick={handleOpenTweetForm}>
               <Edit2 />
             </IconButton>
           )}
-          {username && <Button variant="contained">{username}</Button>}
+          {!user && (
+            <Button variant="contained" onClick={handleOpenLoginPopover}>
+              Login
+            </Button>
+          )}
+          {user && (
+            <Link to={`/user/${user.id}`}>
+              <Button variant="contained">{user.username}</Button>
+            </Link>
+          )}
         </div>
       </div>
       <div className={styles.spacer} />
+      {isSignupPopoverOpen && (
+        <SignupPopover handleClose={handleCloseSignupPopover} />
+      )}
       {isLoginPopoverOpen && (
         <LoginPopover handleClose={handleCloseLoginPopover} />
       )}

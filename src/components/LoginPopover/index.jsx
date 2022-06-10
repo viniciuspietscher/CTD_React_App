@@ -3,12 +3,24 @@ import PropTypes from 'prop-types';
 import { Button, Dialog } from '../../ui/components';
 import { useUser } from '../../contexts/UserContext.jsx';
 import { useNavigate } from 'react-router-dom';
+import { useLazyQuery, gql } from '@apollo/client';
+
+const LOGIN = gql`
+  query Login($username: String!) {
+    login(username: $username) {
+      id
+      username
+    }
+  }
+`;
 
 function LoginPopover({ handleClose }) {
-  const { setUsername } = useUser();
+  const { setUser } = useUser();
   const navigate = useNavigate();
-
   const [text, setText] = useState('');
+  const [login, { data, error }] = useLazyQuery(LOGIN, {
+    variables: { username: text },
+  });
 
   const handleTextChange = (event) => {
     setText(event.target.value);
@@ -16,8 +28,10 @@ function LoginPopover({ handleClose }) {
   const handleEnter = (event) => {
     event.key === 'Enter' && handleSubmitClick();
   };
-  const handleSubmitClick = () => {
-    setUsername(text);
+  const handleSubmitClick = async () => {
+    await login();
+    console.log(data);
+    setUser(data.login);
     handleClose();
     navigate('/home');
   };
@@ -32,6 +46,7 @@ function LoginPopover({ handleClose }) {
           onKeyDown={handleEnter}
           autoFocus
         />
+        {error && <span>{error.message}</span>}
       </div>
       <Button onClick={handleSubmitClick}>Login</Button>
     </Dialog>

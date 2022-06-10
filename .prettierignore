@@ -1,0 +1,2 @@
+# Ignore db
+/src/server/db/db.json

@@ -1,3 +1,3 @@
-export { Button } from './Button';
-export { Dialog } from './Dialog';
-export { IconButton } from './IconButton';
+export * from './Button';
+export * from './Dialog';
+export * from './IconButton';

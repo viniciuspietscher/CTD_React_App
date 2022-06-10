@@ -12,6 +12,7 @@ import { IconButton } from '../../ui/components';
 import { ThumbsUp } from 'react-feather';
 import PropTypes from 'prop-types';
 import { useTheme } from '../../contexts/ThemeContext';
+import { Link } from 'react-router-dom';
 
 const useStyles = createUseStyles({
   root: {
@@ -29,8 +30,11 @@ const useStyles = createUseStyles({
     boxShadow: 'rgb(210 210 210) 0px 3px 6px 0px',
     width: '100%',
   },
-  username: {
+  displayName: {
     fontWeight: 'bold',
+  },
+  username: {
+    fontWeight: 'normal',
   },
   tweetBody: {
     fontSize: 14,
@@ -55,7 +59,7 @@ const useStyles = createUseStyles({
   },
 });
 
-function Tweet({ username, content, promoted = false }) {
+function Tweet({ id, text, createdAt, promoted, author }) {
   const { theme } = useTheme();
   const styles = useStyles({ theme, promoted });
 
@@ -66,8 +70,8 @@ function Tweet({ username, content, promoted = false }) {
 
   return (
     <div className={styles.root}>
-      <span className={styles.username}>{username}</span>
-      <p className={styles.tweetBody}>{content}</p>
+      <span className={styles.username}>{author.username}</span>
+      <p className={styles.tweetBody}>{text}</p>
       {likes === 0 && (
         <IconButton variant="round" onClick={handleAddLike}>
           <ThumbsUp />
@@ -84,9 +88,15 @@ function Tweet({ username, content, promoted = false }) {
 }
 
 Tweet.propTypes = {
-  username: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
   promoted: PropTypes.bool,
+  author: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
+    displayName: PropTypes.string.isRequired,
+  }),
 };
 
 export { Tweet };

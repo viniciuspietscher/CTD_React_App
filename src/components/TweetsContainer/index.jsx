@@ -4,29 +4,42 @@
 */
 
 import { useState, useRef } from 'react';
-import { useFetch } from '../../hooks/useFetch';
 import { Button } from '../../ui/components';
 import { Tweet } from '../Tweet';
 import styles from './styles.module.css';
+import { useQuery, gql } from '@apollo/client';
+
+const GET_ALL_TWEETS = gql`
+  query {
+    tweets {
+      id
+      text
+      createdAt
+      author {
+        id
+        username
+        displayName
+      }
+      promoted
+    }
+  }
+`;
 
 export const TweetsContainer = () => {
+  const [searchText, setSearchText] = useState('');
   const searchElement = useRef();
 
-  const [searchText, setSearchText] = useState('');
+  const { data, loading } = useQuery(GET_ALL_TWEETS);
 
-  const { response: tweets = [], loading } = useFetch(
-    'http://localhost:3000/tweets'
-  );
-  // You can reassign a variable name during destrucutring
-  // - In this case we take response and create a new variable named tweets
-  // We also assign a default value to response in case nothing is returned
-  // - In this case we assign response/tweets to an empty array
-
-  const filteredTweets = tweets.filter(
-    (post) =>
-      post.displayName.toLowerCase().includes(searchText.toLowerCase()) ||
-      post.content.toLowerCase().includes(searchText.toLowerCase())
-  );
+  const filteredTweets = data?.tweets.filter((tweet) => {
+    return (
+      tweet.author.displayName
+        .toLowerCase()
+        .includes(searchText.toLowerCase()) ||
+      tweet.author.username.toLowerCase().includes(searchText.toLowerCase()) ||
+      tweet.text.toLowerCase().includes(searchText.toLowerCase())
+    );
+  });
 
   const handleUpdateSearchText = (event) => setSearchText(event.target.value);
   const handleClearSearchText = () => setSearchText('');
@@ -50,14 +63,7 @@ export const TweetsContainer = () => {
         <div className={styles.tweetsContainerWrapper}>
           <div className={styles.tweetsContainer}>
             {loading && 'Loading...'}
-            {!loading &&
-              filteredTweets.map((tweet) => (
-                <Tweet
-                  username={tweet.displayName}
-                  content={tweet.content}
-                  promoted={tweet.promoted}
-                />
-              ))}
+            {!loading && filteredTweets.map((tweet) => <Tweet {...tweet} />)}
           </div>
         </div>
       </div>

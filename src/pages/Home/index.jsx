@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
 
 export function Home() {
-  const { username } = useUser();
+  const { user } = useUser();
   const navigate = useNavigate();
 
   useEffect(function navigateAwayIfNotLoggedIn() {
-    if (!username) navigate('/');
+    if (!user) navigate('/');
   }, []);
 
   return (

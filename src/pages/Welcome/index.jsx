@@ -3,12 +3,12 @@ import { useUser } from '../../contexts/UserContext';
 import { Link, useNavigate } from 'react-router-dom';
 
 export function Welcome() {
-  const { username } = useUser();
+  const { user } = useUser();
   const navigate = useNavigate();
 
   // TODO is there a better place for these redirects?
   useEffect(function navigateToHomeIfLoggedIn() {
-    if (username) navigate('/home');
+    if (user) navigate('/home');
   }, []);
 
   return (
