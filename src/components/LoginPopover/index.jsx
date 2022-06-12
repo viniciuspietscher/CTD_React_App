@@ -30,7 +30,6 @@ function LoginPopover({ handleClose }) {
   };
   const handleSubmitClick = async () => {
     await login();
-    console.log(data);
     setUser(data.login);
     handleClose();
     navigate('/home');

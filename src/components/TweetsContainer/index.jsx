@@ -21,6 +21,7 @@ const GET_ALL_TWEETS = gql`
         displayName
       }
       promoted
+      likes
     }
   }
 `;

@@ -8,81 +8,150 @@
 
 import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { IconButton } from '../../ui/components';
-import { ThumbsUp } from 'react-feather';
+import { IconButton, MenuButton, MenuItem } from '../../ui/components';
+import { ThumbsUp, Bookmark, MoreHorizontal } from 'react-feather';
 import PropTypes from 'prop-types';
 import { useTheme } from '../../contexts/ThemeContext';
-import { Link } from 'react-router-dom';
+import { Avatar } from './Avatar';
+import { useUser } from '../../contexts/UserContext';
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en';
 
 const useStyles = createUseStyles({
   root: {
-    border: (props) =>
-      props.promoted
-        ? `1px solid ${props.theme.promoted.outline}`
-        : `1px solid ${props.theme.container.outline}`,
+    border: ({ promoted, theme }) =>
+      promoted
+        ? `1px solid ${theme.promoted.outline}`
+        : `1px solid ${theme.container.outline}`,
     borderRadius: 5,
     padding: 20,
     marginBottom: 20,
-    backgroundColor: (props) =>
-      props.promoted
-        ? props.theme.promoted.background
-        : props.theme.container.background,
-    boxShadow: 'rgb(210 210 210) 0px 3px 6px 0px',
+    backgroundColor: ({ theme, promoted }) =>
+      promoted ? theme.promoted.background : theme.container.background,
+    boxShadow: 'rgb(11 11 11 / 20%) 0px 3px 6px 0px',
     width: '100%',
   },
-  displayName: {
-    fontWeight: 'bold',
+  headerContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
   },
-  username: {
-    fontWeight: 'normal',
+  promotedLabel: {
+    border: ({ theme }) => `1px solid ${theme.promoted.outline}`,
+    padding: 4,
+    color: ({ theme }) => theme.promoted.outline,
+    fontSize: 10,
+    borderRadius: 3,
   },
   tweetBody: {
+    color: ({ theme }) => theme.translucent[80],
     fontSize: 14,
     paddingLeft: 20,
-    borderLeft: (props) => `3px solid ${props.theme.translucent[10]}`,
-    color: (props) => props.theme.translucent[70],
+    marginBottom: 10,
+    borderLeft: ({ theme }) => `3px solid ${theme.translucent[10]}`,
   },
-  likes: {
-    color: (props) => `3px solid ${props.theme.translucent[10]}`,
+  actionContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  //TODO remove duplicated styles here
+  likeIcon: {
+    color: ({ liked, theme }) =>
+      liked ? theme.translucent[60] : theme.translucent[30],
+    fill: ({ liked, theme }) => (liked ? theme.like : theme.translucent[0]),
+    animation: ({ liked }) => (liked ? '$grow .5s ease' : ''),
+    transition: 'fill .3s',
+  },
+  likeButton: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  likeCount: {
+    marginLeft: 3,
     fontSize: 12,
+    color: ({ theme }) => theme.translucent[30],
   },
-  likedButton: {
-    color: (props) => props.theme.primary.dark, // applying to the outline
-    fill: (props) => props.theme.primary.main,
-    stroke: 'broken',
-    animation: '$grow .75s ease',
+  bookmarkButton: {
+    color: ({ bookmarked, theme }) =>
+      bookmarked ? theme.translucent[60] : theme.translucent[30],
+    fill: ({ bookmarked, theme }) =>
+      bookmarked ? theme.bookmark : theme.translucent[0],
+    animation: ({ bookmarked }) => (bookmarked ? '$grow .5s ease' : ''),
+    transition: 'fill .3s',
+  },
+  timeAgo: {
+    color: ({ theme }) => theme.translucent[30],
+    fontSize: 12,
+    marginTop: 5,
+  },
+  moreButton: {
+    color: ({ theme }) => theme.translucent[30],
   },
   '@keyframes grow': {
     '0%': { transform: 'scale(1)' },
-    '50%': { transform: 'scale(1.3)' },
+    '20%': { transform: 'scale(1.3)' },
     '100%': { transform: 'scale(1)' },
   },
 });
 
-function Tweet({ id, text, createdAt, promoted, author }) {
+function Tweet({ id, text, createdAt, promoted, author, likes }) {
+  const [liked, setLikes] = useState(false);
+  const [bookmarked, setBookmarked] = useState(false);
   const { theme } = useTheme();
-  const styles = useStyles({ theme, promoted });
+  const styles = useStyles({ theme, promoted, liked, bookmarked });
+  const { user } = useUser();
 
-  const [likes, setLikes] = useState(0);
+  TimeAgo.addDefaultLocale(en);
+  const timeAgo = new TimeAgo('en-US').format(new Date(createdAt));
 
-  const handleAddLike = () => setLikes(likes + 1);
-  const handleRemoveLike = () => setLikes(likes - 1);
+  const handleToggleLike = () => setLikes((prev) => !prev);
+  const handleToggleBookmark = () => setBookmarked((prev) => !prev);
+
+  const handleCopyTweetClick = async () => {
+    await navigator.clipboard.writeText(text);
+    alert('Copied the text: ' + text);
+  };
 
   return (
-    <div className={styles.root}>
-      <span className={styles.username}>{author.username}</span>
-      <p className={styles.tweetBody}>{text}</p>
-      {likes === 0 && (
-        <IconButton variant="round" onClick={handleAddLike}>
-          <ThumbsUp />
-        </IconButton>
-      )}
-      {likes > 0 && (
-        <IconButton variant="round" onClick={handleRemoveLike}>
-          <ThumbsUp className={styles.likedButton} />
-        </IconButton>
-      )}
-      <span className={styles.likes}>{likes} Likes</span>
+    <div className={styles.root} id={id}>
+      <div className={styles.headerContainer}>
+        <Avatar {...author} />
+        {promoted && <span className={styles.promotedLabel}>Ad</span>}
+      </div>
+      <p className={styles.tweetBody}>
+        {text}
+        <div className={styles.timeAgo}>{timeAgo}</div>
+      </p>
+      <div className={styles.actionContainer}>
+        <div>
+          <IconButton
+            className={styles.likeButton}
+            variant="square"
+            onClick={handleToggleLike}
+          >
+            <ThumbsUp className={styles.likeIcon} size={18} />
+            <span className={styles.likeCount}>
+              {liked ? (likes + 1).toLocaleString() : likes.toLocaleString()}
+            </span>
+          </IconButton>
+          <IconButton variant="square" onClick={handleToggleBookmark}>
+            <Bookmark className={styles.bookmarkButton} size={18} />
+          </IconButton>
+        </div>
+        <div>
+          <MenuButton
+            element={
+              <IconButton variant="square">
+                <MoreHorizontal className={styles.moreButton} size={18} />
+              </IconButton>
+            }
+          >
+            {user.id === author.id && <MenuItem>Edit</MenuItem>}
+            <MenuItem onClick={handleCopyTweetClick}>Copy Tweet</MenuItem>
+          </MenuButton>
+        </div>
+      </div>
     </div>
   );
 }
@@ -92,6 +161,7 @@ Tweet.propTypes = {
   text: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
   promoted: PropTypes.bool,
+  likes: PropTypes.number.isRequired,
   author: PropTypes.shape({
     id: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,

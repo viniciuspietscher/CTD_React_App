@@ -8,7 +8,8 @@ const buttonStyles = {
   fontSize: 12,
   borderRadius: 3,
   borderWidth: 1,
-  borderStyle: 'solid',
+  cursor: 'pointer',
+  boxSizing: 'border-box',
 };
 
 const useStyles = createUseStyles({
@@ -23,6 +24,7 @@ const useStyles = createUseStyles({
   },
   outlined: {
     ...buttonStyles,
+    borderStyle: 'solid',
     background: 'none',
     color: (theme) => theme.primary.main,
     borderColor: (theme) => theme.primary.main,
@@ -44,8 +46,8 @@ const Button = ({ children, variant = 'outlined', onClick }) => {
 };
 
 Button.propTypes = {
-  variant: PropTypes.oneOf(['outlined', 'contained']),
-  children: PropTypes.string,
+  variant: PropTypes.oneOf(['outlined', 'contained']).isRequired,
+  children: PropTypes.string.isRequired,
   onClick: PropTypes.func,
 };
 

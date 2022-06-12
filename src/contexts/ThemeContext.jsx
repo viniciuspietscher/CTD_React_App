@@ -5,7 +5,13 @@ import { Theme } from '../ui/themes';
 const ThemeContext = createContext();
 
 const ThemeContextProvider = ({ children }) => {
-  const [theme, setTheme] = useState(Theme.light);
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  const systemTheme = mediaQuery.matches ? Theme.dark : Theme.light;
+  const [theme, setTheme] = useState(systemTheme);
+
+  mediaQuery.addEventListener('change', (event) => {
+    setTheme(event.matches ? Theme.dark : Theme.light);
+  }); // Keep app in sync with system settings
 
   const toggleTheme = () => {
     setTheme(theme === Theme.light ? Theme.dark : Theme.light);

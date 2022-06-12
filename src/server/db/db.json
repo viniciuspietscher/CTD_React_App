@@ -3,37 +3,42 @@
         {
             "id": 1,
             "text": "HI TWITTERS . THANK YOU FOR A WARM WELCOME. FEELING REALLY 21st CENTURY .",
-            "createdAt": "2019-01-01T00:00:00.000Z",
+            "createdAt": "2022-06-11T00:00:00.000Z",
             "promoted": true,
-            "authorId": 4
+            "authorId": 4,
+            "likes": 91
         },
         {
             "id": 2,
             "text": "just setting up my twttr",
-            "createdAt": "2019-01-01T00:00:00.000Z",
+            "createdAt": "2022-06-01T00:00:00.000Z",
             "promoted": false,
-            "authorId": 3
+            "authorId": 3,
+            "likes": 1100
         },
         {
             "id": 3,
             "text": "I was looking at tweets & saw that i really hurt someones feelings ! Im sorry. It was light blue background with white egg shape . Bye",
             "createdAt": "2019-01-01T00:00:00.000Z",
             "promoted": false,
-            "authorId": 1
+            "authorId": 1,
+            "likes": 12689
         },
         {
             "id": 4,
             "text": "L",
-            "createdAt": "2019-01-01T00:00:00.000Z",
+            "createdAt": "2020-01-01T00:00:00.000Z",
             "promoted": false,
-            "authorId": 2
+            "authorId": 2,
+            "likes": 6
         },
         {
             "id": 5,
             "text": "I blocked someone's DAD !?! Who was it ?",
-            "createdAt": "2020-01-01T00:00:00.000Z",
+            "createdAt": "2022-01-01T00:00:00.000Z",
             "promoted": false,
-            "authorId": 1
+            "authorId": 1,
+            "likes": 10952
         }
     ],
     "users": [

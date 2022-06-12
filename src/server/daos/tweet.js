@@ -42,6 +42,7 @@ const tweet = {
       createdAt: new Date().toISOString(),
       promoted: false,
       authorId: Number(authorId),
+      likes: 0,
     };
     db.push(`/tweets[${index}]`, newTweet);
     return this.getTweet(id);

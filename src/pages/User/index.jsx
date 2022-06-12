@@ -42,8 +42,6 @@ function User() {
     if (!user) navigate('/');
   }, []);
 
-  console.log(error);
-
   return (
     <div>
       {!loading && data && (

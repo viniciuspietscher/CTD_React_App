@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useUser } from '../../contexts/UserContext';
-import { Button, IconButton } from '../../ui/components';
+import { Button, IconButton, MenuButton, MenuItem } from '../../ui/components';
 import { Edit2 } from 'react-feather';
 import { LoginPopover, NewTweetPopover } from '../';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { SignupPopover } from '../SignupPopover';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const useStyles = createUseStyles({
   root: {
-    height: 75,
+    height: 50,
     width: '100%',
     boxSizing: 'border-box',
     position: 'fixed',
     left: 0,
     top: 0,
-    backgroundColor: '#222',
-    color: 'white',
+    backgroundColor: (theme) => theme.container.background,
+    borderBottom: (theme) => `1px solid ${theme.translucent[30]}`,
     padding: '10px 20px',
     display: 'flex',
     justifyContent: 'space-between',
@@ -27,14 +28,27 @@ const useStyles = createUseStyles({
     height: 75,
   },
   title: {
-    color: 'white',
+    color: (theme) => theme.translucent[80],
     textDecoration: 'none',
   },
+  tweetButton: {
+    color: (theme) => theme.translucent[60],
+  },
+  toggleContainer: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  buttonContainer: { display: 'flex', alignItems: 'center' },
+  checkbox: { accentColor: (theme) => theme.primary.main, cursor: 'pointer' },
 });
 
 function AppBar({ title }) {
-  const { user } = useUser();
-  const styles = useStyles();
+  const { user, setUser } = useUser();
+  const { toggleTheme, theme } = useTheme();
+  const styles = useStyles(theme);
+  const navigate = useNavigate();
 
   const [isSignupPopoverOpen, setIsSignupPopoverOpen] = useState(false);
   const [isLoginPopoverOpen, setIsLoginPopoverOpen] = useState(false);
@@ -52,29 +66,52 @@ function AppBar({ title }) {
   const handleOpenTweetForm = () => setIsNewTweetFormOpen(true);
   const handleCloseTweetForm = () => setIsNewTweetFormOpen(false);
 
-  //TODO remove inline styles
+  const navigateToProfile = () => navigate(`/user/${user.id}`);
+  const navigateToUserSettings = () => navigate(`/settings`);
+
+  const logout = () => {
+    setUser(null);
+    navigate('/');
+  };
   return (
     <>
       <div className={styles.root}>
-        <Link to="/">
-          <span className={styles.title}>{title}</span>
+        <Link to="/" className={styles.title}>
+          {title}
         </Link>
-        <div style={{ display: 'flex' }}>
-          {!user && <Button onClick={handleOpenSignupPopover}>SignUp</Button>}
-          {user && (
-            <IconButton onClick={handleOpenTweetForm}>
-              <Edit2 />
-            </IconButton>
-          )}
+        <div className={styles.buttonContainer}>
           {!user && (
-            <Button variant="contained" onClick={handleOpenLoginPopover}>
-              Login
-            </Button>
+            <>
+              <Button onClick={handleOpenSignupPopover}>Sign Up</Button>
+              <Button variant="contained" onClick={handleOpenLoginPopover}>
+                Login
+              </Button>
+            </>
           )}
           {user && (
-            <Link to={`/user/${user.id}`}>
-              <Button variant="contained">{user.username}</Button>
-            </Link>
+            <>
+              <IconButton onClick={handleOpenTweetForm}>
+                <Edit2 className={styles.tweetButton} size={20} />
+              </IconButton>
+              <MenuButton
+                element={<Button variant="contained">{user.username}</Button>}
+              >
+                <MenuItem onClick={navigateToProfile}>Profile</MenuItem>
+                <MenuItem onClick={navigateToUserSettings}>Settings</MenuItem>
+                <MenuItem onClick={logout}>Logout</MenuItem>
+                <MenuItem>
+                  <span className={styles.toggleContainer}>
+                    <span>Dark Mode</span>
+                    <input
+                      type="checkbox"
+                      onClick={toggleTheme}
+                      checked={theme.name === 'dark'}
+                      className={styles.checkbox}
+                    />
+                  </span>
+                </MenuItem>
+              </MenuButton>
+            </>
           )}
         </div>
       </div>

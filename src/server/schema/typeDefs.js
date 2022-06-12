@@ -7,6 +7,7 @@ const typeDefs = gql`
     createdAt: String!
     author: User!
     promoted: Boolean
+    likes: Int
   }
 
   type User {

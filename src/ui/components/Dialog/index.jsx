@@ -17,12 +17,14 @@ const useStyles = createUseStyles({
     backgroundColor: 'rgba(0,0,0,0.7)',
   },
   dialog: {
-    backgroundColor: (props) => props.theme.container.background,
+    backgroundColor: ({ theme }) => theme.container.background,
+    border: ({ theme }) => `1px solid ${theme.container.outline}`,
     margin: '15% auto',
     padding: 20,
     borderRadius: 10,
     minWidth: 300,
-    maxWidth: (props) => props.maxWidth,
+    maxWidth: ({ maxWidth }) => maxWidth,
+    color: ({ theme }) => theme.translucent[70],
   },
   titleContainer: {
     display: 'flex',
@@ -30,8 +32,12 @@ const useStyles = createUseStyles({
     marginBottom: 10,
   },
   title: {
+    color: ({ theme }) => theme.translucent[70],
     marginLeft: 10,
-    fontSize: 20,
+    fontSize: 16,
+  },
+  closeButton: {
+    color: ({ theme }) => theme.translucent[60],
   },
 });
 
@@ -43,7 +49,7 @@ const Dialog = ({ children, handleClose, title, maxWidth = 400 }) => {
       <div className={styles.dialog}>
         <div className={styles.titleContainer}>
           <IconButton variant="round" onClick={handleClose}>
-            <X />
+            <X className={styles.closeButton} size={20} />
           </IconButton>
           <span className={styles.title}>{title}</span>
         </div>

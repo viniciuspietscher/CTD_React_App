@@ -5,6 +5,7 @@ import ReactLoading from 'react-loading';
 import { Button, Dialog } from '../../ui/components';
 import { useUser } from '../../contexts/UserContext';
 import { useMutation, gql } from '@apollo/client';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const CREATE_TWEET = gql`
   mutation CreateTweet($text: String!, $authorId: ID!) {
@@ -22,18 +23,22 @@ const useStyles = createUseStyles({
     margin: 0,
     padding: 10,
     fontFamily: 'Arial',
+    border: ({ theme }) => `1px solid ${theme.container.outline}`,
+    borderRadius: 3,
+    backgroundColor: ({ theme }) => theme.container.background,
+    color: ({ theme }) => theme.translucent[80],
   },
   characterCount: {
     fontSize: 12,
     fontFamily: 'Arial',
-    color: (pastWarningCharacters) =>
-      pastWarningCharacters ? '#ff4e4e' : '#797979',
+    color: ({ pastWarningCharacters, theme }) =>
+      pastWarningCharacters ? theme.warning : theme.translucent[50],
   },
 });
 
 function NewTweetPopover({ handleClose }) {
   const { user } = useUser();
-
+  const { theme } = useTheme();
   const [tweet, setTweet] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(undefined);
@@ -50,7 +55,7 @@ function NewTweetPopover({ handleClose }) {
   const WARNING_CHARACTERS = 20; // Constant convention is all caps
   const pastWarningCharacters =
     characterCount >= MAX_CHARACTERS - WARNING_CHARACTERS;
-  const styles = useStyles(pastWarningCharacters);
+  const styles = useStyles({ theme, pastWarningCharacters });
 
   const handleSubmitTweetClick = async () => {
     if (tweet.trim() === '') {
@@ -60,7 +65,6 @@ function NewTweetPopover({ handleClose }) {
     setLoading(true);
     try {
       const response = await submitTweet();
-      console.log(response);
       setLoading(false);
       handleClose();
     } catch (error) {

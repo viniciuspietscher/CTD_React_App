@@ -7,7 +7,15 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { UserContextProvider } from './contexts/UserContext';
 import { ThemeContextProvider } from './contexts/ThemeContext';
-import { Home, NotFound, About, Welcome, Template, User } from './pages';
+import {
+  Home,
+  NotFound,
+  About,
+  Welcome,
+  Template,
+  User,
+  Settings,
+} from './pages';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 function App() {
@@ -26,6 +34,7 @@ function App() {
                 <Route path="/" element={<Welcome />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/settings" element={<Settings />} />
                 <Route path="/user/:userId" element={<User />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
