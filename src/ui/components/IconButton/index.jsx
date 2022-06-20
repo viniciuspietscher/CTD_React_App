@@ -4,6 +4,7 @@ import { createUseStyles } from 'react-jss';
 
 const iconButtonStyles = {
   display: 'inline-flex',
+  alignItems: 'center',
   cursor: 'pointer',
   padding: 5,
   '&:hover': {

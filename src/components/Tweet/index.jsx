@@ -16,7 +16,7 @@ import { Avatar } from './Avatar';
 import { useUser } from '../../contexts/UserContext';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
-
+import { Toast } from '../../ui/components/Toast';
 const useStyles = createUseStyles({
   root: {
     border: ({ promoted, theme }) =>
@@ -152,6 +152,7 @@ function Tweet({ id, text, createdAt, promoted, author, likes }) {
           </MenuButton>
         </div>
       </div>
+      {bookmarked && <Toast>Bookmarked {author.username}'s tweet</Toast>}
     </div>
   );
 }

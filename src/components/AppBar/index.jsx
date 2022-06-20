@@ -94,7 +94,7 @@ function AppBar({ title }) {
                 <Edit2 className={styles.tweetButton} size={20} />
               </IconButton>
               <MenuButton
-                element={<Button variant="contained">{user.username}</Button>}
+                element={<Button variant="outlined">{user.username}</Button>}
               >
                 <MenuItem onClick={navigateToProfile}>Profile</MenuItem>
                 <MenuItem onClick={navigateToUserSettings}>Settings</MenuItem>

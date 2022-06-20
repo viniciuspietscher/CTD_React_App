@@ -22,6 +22,7 @@ const GET_USER = gql`
           username
           displayName
         }
+        likes
       }
       location
     }
