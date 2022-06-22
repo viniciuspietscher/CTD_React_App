@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { createUseStyles } from 'react-jss';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -50,7 +50,8 @@ const useStyles = createUseStyles({
   },
 });
 
-function Avatar({ id, username, displayName, color = randomColor() }) {
+function Avatar({ id, username, displayName }) {
+  const color = useMemo(() => randomColor(), []); // Fixes our re-rendering color bug
   const { theme } = useTheme();
   const styles = useStyles({ theme, color });
   const avatarLetter = displayName[0];

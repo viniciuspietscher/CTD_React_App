@@ -3,6 +3,7 @@ import { AppBar, Footer } from '../../components';
 import { createUseStyles } from 'react-jss';
 import PropTypes from 'prop-types';
 import { useTheme } from '../../contexts/ThemeContext';
+import { ToastContainer } from '../../ui/components/ToastContainer';
 
 const useStyles = createUseStyles({
   root: {
@@ -22,6 +23,7 @@ function Template({ children }) {
     <div className={styles.root}>
       <AppBar title="CTD Twitter" />
       {children}
+      <ToastContainer />
       <Footer />
     </div>
   );

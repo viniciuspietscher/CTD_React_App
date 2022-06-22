@@ -7,6 +7,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { UserContextProvider } from './contexts/UserContext';
 import { ThemeContextProvider } from './contexts/ThemeContext';
+import { ToastContextProvider } from './contexts/ToastContext';
 import {
   Home,
   NotFound,
@@ -28,18 +29,20 @@ function App() {
     <ApolloProvider client={client}>
       <ThemeContextProvider>
         <UserContextProvider>
-          <BrowserRouter>
-            <Template>
-              <Routes>
-                <Route path="/" element={<Welcome />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/settings" element={<Settings />} />
-                <Route path="/user/:userId" element={<User />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Template>
-          </BrowserRouter>
+          <ToastContextProvider>
+            <BrowserRouter>
+              <Template>
+                <Routes>
+                  <Route path="/" element={<Welcome />} />
+                  <Route path="/home" element={<Home />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/settings" element={<Settings />} />
+                  <Route path="/user/:userId" element={<User />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Template>
+            </BrowserRouter>
+          </ToastContextProvider>
         </UserContextProvider>
       </ThemeContextProvider>
     </ApolloProvider>
