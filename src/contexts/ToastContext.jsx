@@ -11,7 +11,7 @@ const ToastContextProvider = ({ children }) => {
     const newToast = {
       id: uuid(),
       text: text,
-      persisted: persisted
+      persisted: persisted,
     };
     setToasts((prev) => [...prev, newToast]);
     return newToast;
