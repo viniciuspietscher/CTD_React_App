@@ -22,7 +22,8 @@ const useStyles = createUseStyles({
     animationDuration: ANIMATION_DURATION,
     animationFillMode: 'forwards',
     marginBottom: 10,
-    '&:last-child': {
+    width: 'fit-content',
+    '&:first-child': {
       marginBottom: 0,
     },
   },

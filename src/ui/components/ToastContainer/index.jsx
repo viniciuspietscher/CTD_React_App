@@ -9,7 +9,7 @@ const useStyles = createUseStyles({
     left: 20,
     bottom: 65,
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column-reverse',
     justifyContent: 'flex-end',
   },
 });

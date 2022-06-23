@@ -4,6 +4,7 @@ import { Button, Dialog } from '../../ui/components';
 import { useUser } from '../../contexts/UserContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import { useLazyQuery, gql } from '@apollo/client';
+import { useToast } from '../../contexts/ToastContext';
 
 const LOGIN = gql`
   query Login($username: String!) {
@@ -21,6 +22,7 @@ function LoginPopover({ handleClose }) {
   const [login, { data, error }] = useLazyQuery(LOGIN, {
     variables: { username: text },
   });
+  const { createToast } = useToast();
 
   const handleTextChange = (event) => {
     setText(event.target.value);
@@ -33,6 +35,7 @@ function LoginPopover({ handleClose }) {
     setUser(data.login);
     handleClose();
     navigate('/home');
+    createToast(`Welcome back, ${data.login.username}`);
   };
 
   return (

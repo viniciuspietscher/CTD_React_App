@@ -30,7 +30,7 @@ const useStyles = createUseStyles({
     backgroundColor: ({ theme, promoted }) =>
       promoted ? theme.promoted.background : theme.container.background,
     boxShadow: 'rgb(11 11 11 / 20%) 0px 3px 6px 0px',
-    width: '100%',
+    width: '500px',
   },
   headerContainer: {
     display: 'flex',

@@ -13,10 +13,6 @@ export function Home() {
     if (!user) navigate('/');
   }, []);
 
-  useEffect(() => {
-    if (user) createToast(`Welcome back, ${user.username}`);
-  }, []);
-
   return (
     <>
       <TweetsContainer />
