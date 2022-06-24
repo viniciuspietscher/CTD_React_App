@@ -6,7 +6,7 @@
     - We can use these props to conditionally render styles
 */
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { createUseStyles } from 'react-jss';
 import { IconButton, MenuButton, MenuItem } from '../../ui/components';
 import { ThumbsUp, Bookmark, MoreHorizontal } from 'react-feather';
@@ -96,6 +96,8 @@ const useStyles = createUseStyles({
   },
 });
 
+TimeAgo.addLocale(en);
+
 function Tweet({ id, text, createdAt, promoted, author, likes }) {
   const [liked, setLikes] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
@@ -104,8 +106,10 @@ function Tweet({ id, text, createdAt, promoted, author, likes }) {
   const { user } = useUser();
   const { createToast } = useToast();
 
-  TimeAgo.addDefaultLocale(en);
-  const timeAgo = new TimeAgo('en-US').format(new Date(createdAt));
+  const timeAgo = useMemo(
+    () => new TimeAgo('en-US').format(new Date(createdAt)),
+    [createdAt]
+  );
 
   const handleToggleLike = () => setLikes((prev) => !prev);
   const handleToggleBookmark = () => {
