@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Dialog } from '../../ui/components';
 import { useUser } from '../../contexts/UserContext.jsx';
@@ -24,18 +24,23 @@ function LoginPopover({ handleClose }) {
   });
   const { createToast } = useToast();
 
+  useEffect(() => {
+    if(data?.login) {
+      setUser(data.login);
+      handleClose();
+      navigate('/home');
+      createToast(`Welcome back, ${data.login.username}`);
+    }
+  },[data])
+
   const handleTextChange = (event) => {
     setText(event.target.value);
   };
   const handleEnter = (event) => {
     event.key === 'Enter' && handleSubmitClick();
   };
-  const handleSubmitClick = async () => {
-    await login();
-    setUser(data.login);
-    handleClose();
-    navigate('/home');
-    createToast(`Welcome back, ${data.login.username}`);
+  const handleSubmitClick = () => {
+      login();
   };
 
   return (
