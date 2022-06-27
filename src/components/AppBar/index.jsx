@@ -82,7 +82,9 @@ function AppBar({ title }) {
         <div className={styles.buttonContainer}>
           {!user && (
             <>
-              <Button onClick={handleOpenSignupPopover}>Sign Up</Button>
+              <Button variant="outlined" onClick={handleOpenSignupPopover}>
+                Sign Up
+              </Button>
               <Button variant="contained" onClick={handleOpenLoginPopover}>
                 Login
               </Button>

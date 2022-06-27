@@ -29,7 +29,7 @@ function MenuItem({ children, onClick }) {
 }
 
 MenuItem.propTypes = {
-  children: PropTypes.string.isRequired,
+  children: PropTypes.string,
   onClick: PropTypes.func,
 };
 

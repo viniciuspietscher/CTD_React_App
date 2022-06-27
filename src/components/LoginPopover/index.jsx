@@ -25,13 +25,13 @@ function LoginPopover({ handleClose }) {
   const { createToast } = useToast();
 
   useEffect(() => {
-    if(data?.login) {
+    if (data?.login) {
       setUser(data.login);
       handleClose();
       navigate('/home');
       createToast(`Welcome back, ${data.login.username}`);
     }
-  },[data])
+  }, [data]);
 
   const handleTextChange = (event) => {
     setText(event.target.value);
@@ -40,7 +40,7 @@ function LoginPopover({ handleClose }) {
     event.key === 'Enter' && handleSubmitClick();
   };
   const handleSubmitClick = () => {
-      login();
+    login();
   };
 
   return (
@@ -55,7 +55,9 @@ function LoginPopover({ handleClose }) {
         />
         {error && <span>{error.message}</span>}
       </div>
-      <Button onClick={handleSubmitClick}>Login</Button>
+      <Button variant="contained" onClick={handleSubmitClick}>
+        Login
+      </Button>
     </Dialog>
   );
 }
